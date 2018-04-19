@@ -1,0 +1,25 @@
+/**index.wxss**/
+.header-center {
+  text-align: left;
+  flex: 1;
+}
+.item {
+  padding: 20rpx 40rpx;
+  border-bottom: 1rpx #A5A5A5 solid;
+}
+.item view {
+  margin-bottom: 10rpx;
+}
+.item-full_name {
+  color: #2372FF;
+  font-weight: bolder;
+}
+.item-ps {
+  display: flex;
+  align-items: center;
+  color: #A5A5A5;
+  font-size: 15px;
+}
+.item-ps image {
+  margin-left: 10rpx;
+}
