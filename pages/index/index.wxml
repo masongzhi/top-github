@@ -2,21 +2,22 @@
 <view>
   <view class='header'>
     <picker bindchange="bindLanguageChange" range="{{languageArr}}">
-        <image style="width: 20px; height: 20px;" src="../../icon/other.png"></image>
+      <image style="width: 20px; height: 20px;" src="../../icon/other.png"></image>
     </picker>
     <view class='header-center'>
-      <text>JavaScript</text>
+      <text>{{languageStr}}</text>
     </view>
     <picker bindchange="bindTimeChange" value="{{timeIndex}}" range="{{timeArr}}">
-        <image style="width: 20px; height: 20px;" src="../../icon/date.png"></image>
+      <image style="width: 20px; height: 20px;" src="../../icon/date.png"></image>
     </picker>
   </view>
   <scroll-view scroll-y bindscrolltolower="getRepository" class="container" style="height: {{height - 50}}px">
+    <view wx:if="{{items.length === 0}}" class='container-header'>列表为空</view>
     <view wx:for="{{items}}" wx:key="{{item.id}}" class='item'>
       <view class='item-full_name'>{{item.full_name}}</view>
       <view class='item-description'>{{item.description}}</view>
       <view class='item-ps'>
-        {{item.language}}·{{item.stargazers_count}} stars·Build by
+        {{item.language}}·{{item.stargazers_count}} stars·{{item.createTime}}·Build by
         <image style="width: 20px; height: 20px;" src="{{item.owner.avatar_url}}"></image>
       </view>
     </view>

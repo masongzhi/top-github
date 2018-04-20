@@ -1,4 +1,5 @@
-const formatTime = date => {
+const ONE_DAY = 86400000
+const formatTime = (date, sym = '/', option = {}) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -6,7 +7,12 @@ const formatTime = date => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  let result = [year, month, day].map(formatNumber).join(sym)
+  if (option.complete) {
+    result += [hour, minute, second].map(formatNumber).join(':')
+  }
+
+  return result
 }
 
 const formatNumber = n => {
@@ -14,6 +20,60 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const getDayStart = time => {
+  const date = time ? new Date(time) : new Date()
+  return new Date(date.setHours(0, 0, 0, 0))
+}
+
+const transferRange = str => {
+  const dayStartStamp = Date.prototype.getTime.call(getDayStart())
+  let result
+
+  switch (str) {
+    case 'Today':
+      result = dayStartStamp
+      break;
+    case 'Last week':
+      result = dayStartStamp - ONE_DAY * 7
+      break;
+    case 'Last month':
+      result = dayStartStamp - ONE_DAY * 30
+      break;
+    case 'Last year':
+      result = dayStartStamp - ONE_DAY * 365
+      break;
+  }
+  console.log(formatTime(new Date(result), '-'))
+  return formatTime(new Date(result), '-')
+}
+
+const transferTimeToStr = time => {
+  if (!time) throw new Error('transferTimeToStr方法需要传入time')
+  const dayStart = getDayStart(time)
+  const diffDay = Math.floor(new Date().getTime() - new Date(time).getTime()) / ONE_DAY
+  let result = ''
+  switch (diffDay) {
+    case 0:
+      result = 'Today'
+      break
+    case 1:
+      result = 'Last day'
+      break
+    case 2:
+      result = 'Last 2 day'
+      break
+    case 3:
+      result = 'Last 3 day'
+      break
+    default:
+      result = formatTime(dayStart, '-')
+  }
+  return result
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime,
+  transferRange,
+  getDayStart,
+  transferTimeToStr
 }
