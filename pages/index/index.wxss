@@ -23,3 +23,8 @@
 .item-ps image {
   margin-left: 10rpx;
 }
+.container-header {
+  margin-top: 100rpx;
+  text-align: center;
+  color: #A5A5A5;
+}
