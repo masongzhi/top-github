@@ -1,5 +1,5 @@
 # top-github
-top github 的小程序版（非原作者）
+top github 的小程序版（非安卓版原作者）
 
 ### 目前没解决问题
 * 直接访问 api.github.com 显示没备案，需要做后端代理（我的域名也没备案，需要申请）
