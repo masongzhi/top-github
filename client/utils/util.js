@@ -20,6 +20,31 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+
+// 显示繁忙提示
+var showBusy = text => wx.showToast({
+  title: text,
+  icon: 'loading',
+  duration: 10000
+})
+
+// 显示成功提示
+var showSuccess = text => wx.showToast({
+  title: text,
+  icon: 'success'
+})
+
+// 显示失败提示
+var showModel = (title, content) => {
+  wx.hideToast();
+
+  wx.showModal({
+    title,
+    content: JSON.stringify(content),
+    showCancel: false
+  })
+}
+
 const getDayStart = time => {
   const date = time ? new Date(time) : new Date()
   return new Date(date.setHours(0, 0, 0, 0))
@@ -73,6 +98,9 @@ const transferTimeToStr = time => {
 
 module.exports = {
   formatTime,
+  showBusy,
+  showSuccess,
+  showModel,
   transferRange,
   getDayStart,
   transferTimeToStr
