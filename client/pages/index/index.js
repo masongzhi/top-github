@@ -1,8 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
-const {repository_search_url} = require('../../api/api.js')
-const { repository_search_url: data_repository_search_url } = require('./mock.js')
+const { repository_search_url } = require('../../api/api.js')
+const config = require('../../config.js')
 const { transferRange, transferTimeToStr } = require('../../utils/util.js')
 
 Page({
@@ -13,7 +13,7 @@ Page({
     language: 'JavaScript',
     languageStr: 'JavaScript',
     items: [],
-    timeArr: ["Today", "Last week", "Last month", "Last year"],    
+    timeArr: ["Today", "Last week", "Last month", "Last year"],
     languageArr: [
       "All",
       "C#",
@@ -31,7 +31,7 @@ Page({
   },
   bindTimeChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    
+
     this.setData({
       page: 1,
       time: this.data.timeArr[e.detail.value],
@@ -56,7 +56,7 @@ Page({
     })
     const that = this
     wx.request({
-      url: repository_search_url,
+      url: config.service.repositorySearchUrl,
       data: {
         q: `created:>${that.data.timeStr} language:${that.data.language}`,
         sort: 'stars',
@@ -86,10 +86,10 @@ Page({
     })
   },
   getItemsByAddCreateTime: function (items) {
-    return items.map(it => {
+    return items && items.map(it => {
       it.createTime = transferTimeToStr(it.created_at)
       return it
-    })
+    }) || []
   },
   onLoad: function () {
     wx.getSystemInfo({
