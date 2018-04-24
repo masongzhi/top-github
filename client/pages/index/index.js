@@ -8,8 +8,8 @@ const { transferRange, transferTimeToStr } = require('../../utils/util.js')
 Page({
   data: {
     page: 1,
-    time: 'Today',
-    timeStr: transferRange('Today'),
+    time: 'Last week',
+    timeStr: transferRange('Last week'),
     language: 'JavaScript',
     languageStr: 'JavaScript',
     items: [],
@@ -27,7 +27,9 @@ Page({
       "PHP",
       "Python"
     ],
-    height: ''
+    height: '',
+    showPopup: false,
+    popupMsg: ''
   },
   bindTimeChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -90,6 +92,12 @@ Page({
       it.createTime = transferTimeToStr(it.created_at)
       return it
     }) || []
+  },
+  showUrlModal: function (event) {
+    this.setData({
+      showPopup: true,
+      popupMsg: event.currentTarget.id
+    })
   },
   onLoad: function () {
     wx.getSystemInfo({

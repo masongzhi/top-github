@@ -28,3 +28,6 @@
   text-align: center;
   color: #A5A5A5;
 }
+.popup-content {
+  text-align: center;
+}

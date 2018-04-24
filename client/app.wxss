@@ -1,15 +1,20 @@
 /**app.wxss**/
 .container {
-
+  padding-top: 110rpx;
 } 
 .header {
   display: flex;
   justify-content: center;
   align-items: space-between;
+  position: fixed;
+  width: 100%;
   background-color: #2372FF;
   color: #fff;
   font-weight: bolder;
+  height: 110rpx;
   padding: 30rpx;
+  box-sizing: border-box;
+  z-index: 2;
 }
 .header-center {
   margin-left: 20rpx;
