@@ -1,9 +1,12 @@
 const rp = require('request-promise');
 
-async function repositorySearchUrl(ctx, next) {
+async function transfer(ctx) {
+  const { url } = ctx.params;
+  const { method, body } = ctx.request;
   const options = {
-    uri: 'https://api.github.com/search/repositories',
+    uri: `https://api.github.com/${url}`,
     qs: ctx.query,
+    body: body,
     headers: {
       'User-Agent': 'Request-Promise'
     },
