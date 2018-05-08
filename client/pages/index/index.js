@@ -99,6 +99,16 @@ Page({
       popupMsg: event.currentTarget.id
     })
   },
+  onShareAppMessage: function (res) {
+    return {
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  },
   onLoad: function () {
     wx.getSystemInfo({
       success: (res) => {
