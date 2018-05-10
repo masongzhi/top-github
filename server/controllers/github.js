@@ -1,21 +1,21 @@
-const rp = require('request-promise');
+const axios = require('axios');
 
 async function transfer(ctx) {
   const { url } = ctx.params;
   const { method, body } = ctx.request;
   const options = {
-    uri: `https://api.github.com/${url}`,
-    qs: ctx.query,
-    body: body,
+    url: `https://api.github.com/${url}`,
+    method: method,
+    params: ctx.query,
+    data: body,
     headers: {
-      'User-Agent': 'Request-Promise'
-    },
-    json: true
+      'X-Requested-With': 'XMLHttpRequest'
+    }
   };
-  const res = await rp(options);
+  const res = await axios(options);
   ctx.body = res;
 }
 
 module.exports = {
-  repositorySearchUrl
+  transfer
 }
