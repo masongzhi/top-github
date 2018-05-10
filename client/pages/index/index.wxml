@@ -6,12 +6,13 @@
     </picker>
     <view class='header-center'>
       <text>{{languageStr}}</text>
+      <text class='default-language-btn' bindtap='clickDefaultLanguage'>default</text>
     </view>
     <picker bindchange="bindTimeChange" value="{{timeIndex}}" range="{{timeArr}}">
       <image style="width: 20px; height: 20px;" src="../../icon/date.png"></image>
     </picker>
   </view>
-  <scroll-view scroll-y bindscrolltolower="getRepository" class="container" style="height: {{height}}px">
+  <scroll-view scroll-y bindscrolltolower="scrolltolower" class="container" style="height: {{height}}px">
     <view wx:if="{{items.length === 0}}" class='container-header'>列表为空</view>
     <view wx:for="{{items}}" wx:key="{{item.id}}" class='item' bindtap='showUrlModal' id="{{item.url}}">
       <view class='item-full_name'>{{item.full_name}}</view>
@@ -22,7 +23,16 @@
       </view>
     </view>
   </scroll-view>
+  <!--不能跳转外链，只能复制链接外部访问  -->
   <wxcPopup title="长按链接复制" visible="{{showPopup}}" hideConfirm="{{true}}">
     <text selectable class='popup-content'>{{popupMsg}}</text>
+  </wxcPopup>
+  <!--设置默认语言  -->
+  <wxcPopup title="选择默认查询语言" visible="{{showDefaultLanguage}}" hideCancel="{{true}}" bindonConfirm="onDefaultLanguageConfirm">
+    <picker-view style="width: 100%; height: 100px;" value="{{value}}" bindchange="changeDefaultLanguage">
+    <picker-view-column>
+      <view wx:for="{{languageArr}}" wx:key="{{item}}" style="line-height: 50px">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
   </wxcPopup>
 </view>

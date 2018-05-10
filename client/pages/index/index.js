@@ -8,12 +8,12 @@ const { transferRange, transferTimeToStr } = require('../../utils/util.js')
 Page({
   data: {
     page: 1,
-    time: 'Last week',
-    timeStr: transferRange('Last week'),
-    language: 'JavaScript',
-    languageStr: 'JavaScript',
+    time: 'Last 3 days',
+    timeStr: transferRange('Last 3 days'),
+    language: '',
+    languageStr: 'All',
     items: [],
-    timeArr: ["Today", "Last week", "Last month", "Last year"],
+    timeArr: ["Last 3 days", "Last week", "Last month", "Last year"],
     languageArr: [
       "All",
       "C#",
@@ -29,7 +29,8 @@ Page({
     ],
     height: '',
     showPopup: false,
-    popupMsg: ''
+    popupMsg: '',
+    showDefaultLanguage: false
   },
   bindTimeChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -46,11 +47,14 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       page: 1,
-      languageStr: e.detail.value ? this.data.languageArr[e.detail.value] : '',
+      languageStr: this.getLanguageStr(this.data.languageArr[e.detail.value]),
       language: this.data.languageArr[e.detail.value]
     })
     // 调用getRepository
     this.getRepository()
+  },
+  getLanguageStr: function (val) {
+    return val || ''
   },
   getRepository: function () {
     wx.showLoading({
@@ -78,6 +82,7 @@ Page({
           items = Array.prototype.concat.call(that.data.items, data.items)
         } else {
           items = data.items
+          console.log('items', items)
         }
         that.setData({
           items: that.getItemsByAddCreateTime(items),
@@ -109,7 +114,47 @@ Page({
       }
     }
   },
+  changeDefaultLanguage: function (event) {
+    this.setData({
+      language: this.data.languageArr[event.detail.value[0]]
+    })
+  },
+  onDefaultLanguageConfirm: function () {
+    try {
+      wx.setStorageSync('defaultLanguage', this.data.language)
+      this.setData({
+        page: 1,
+        showDefaultLanguage: false,
+        languageStr: this.getLanguageStr(this.data.language)
+      })
+      // 调用getRepository
+      this.getRepository()
+    } catch (e) {
+      console.error('设置默认语言失败', e)
+    }
+  },
+  clickDefaultLanguage: function () {
+    this.setData({ showDefaultLanguage: true })
+  },
   onLoad: function () {
+    try {
+      const val = wx.getStorageSync('defaultLanguage')
+      console.log('defaultLanguage', val)
+      if (val) {
+        this.setData({
+          languageStr: this.getLanguageStr(val),
+          language: val
+        })
+        // 调用getRepository
+        this.getRepository()
+      } else {
+        this.setData({
+          showDefaultLanguage: true
+        })
+      }
+    } catch (e) {
+      console.error('获取默认语言失败', e)
+    }
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -117,7 +162,5 @@ Page({
         })
       }
     })
-    // 调用getRepository
-    this.getRepository()
   }
 })

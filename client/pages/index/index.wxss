@@ -31,3 +31,10 @@
 .popup-content {
   text-align: center;
 }
+.default-language-btn {
+  margin-left: 10rpx;
+  font-size: 10px;
+  padding: 0 5rpx;
+  color: orange;
+  border: 1rpx solid orange;
+}

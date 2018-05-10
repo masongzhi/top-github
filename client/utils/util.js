@@ -55,9 +55,8 @@ const transferRange = str => {
   let result
 
   switch (str) {
-    case 'Today':
-      // 如果设为当天凌晨，那么凌晨刷就没数据了，所以改为过去24小时
-      result = new Date().getTime() - ONE_DAY
+    case 'Last 3 days':
+      result = dayStartStamp - ONE_DAY * 3
       break;
     case 'Last week':
       result = dayStartStamp - ONE_DAY * 7
