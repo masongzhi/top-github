@@ -8,12 +8,13 @@ const { transferRange, transferTimeToStr } = require('../../utils/util.js')
 Page({
   data: {
     page: 1,
-    time: 'Last 3 days',
-    timeStr: transferRange('Last 3 days'),
+    time: 'Last 3 day',
+    timeStr: transferRange('Last 3 day'),
     language: '',
+    tmpLanguage: '',
     languageStr: 'All',
     items: [],
-    timeArr: ["Last 3 days", "Last week", "Last month", "Last year"],
+    timeArr: ["Last 3 day", "Last week", "Last month", "Last year"],
     languageArr: [
       "All",
       "C#",
@@ -116,7 +117,7 @@ Page({
   },
   changeDefaultLanguage: function (event) {
     this.setData({
-      language: this.data.languageArr[event.detail.value[0]]
+      tmpLanguage: this.data.languageArr[event.detail.value[0]]
     })
   },
   onDefaultLanguageConfirm: function () {
@@ -125,7 +126,8 @@ Page({
       this.setData({
         page: 1,
         showDefaultLanguage: false,
-        languageStr: this.getLanguageStr(this.data.language)
+        languageStr: this.getLanguageStr(this.data.tmpLanguage),
+        language: this.data.tmpLanguage
       })
       // 调用getRepository
       this.getRepository()

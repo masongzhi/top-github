@@ -55,7 +55,7 @@ const transferRange = str => {
   let result
 
   switch (str) {
-    case 'Last 3 days':
+    case 'Last 3 day':
       result = dayStartStamp - ONE_DAY * 3
       break;
     case 'Last week':
