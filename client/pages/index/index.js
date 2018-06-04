@@ -99,10 +99,16 @@ Page({
       return it
     }) || []
   },
-  showUrlModal: function (event) {
-    this.setData({
-      showPopup: true,
-      popupMsg: event.currentTarget.id
+  clipUrl: function (event) {
+    wx.setClipboardData({
+      data: event.currentTarget.id,
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+          icon: 'success',
+          duration: 1000
+        })
+      }
     })
   },
   onShareAppMessage: function (res) {
